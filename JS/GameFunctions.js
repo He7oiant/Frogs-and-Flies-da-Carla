@@ -1,6 +1,8 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
 
+var mosca = new Mosca(0,300,10,10,3,30,1);
+
 Draw();
 
 function Draw() {
@@ -9,6 +11,7 @@ function Draw() {
     pincel.fillStyle = '#284dc7';
     pincel.fillRect(0,600,1200,300);
     BgGrass(110,610,7);
+    
 }
 
 function BgGrass(x, y, escala = 1) {
@@ -31,8 +34,8 @@ function BgGrass(x, y, escala = 1) {
 
     const tamanhoPixel = 4 * escala; // Ajusta o tamanho de cada pixel retrô
 
-    for (let l = 0; l < mapaPlanta.length; l++) {
-        for (let c = 0; c < mapaPlanta[l].length; c++) {
+    for (l = 0; l < mapaPlanta.length; l++) {
+        for (c = 0; c < mapaPlanta[l].length; c++) {
             const valor = mapaPlanta[l][c];
             
             if (valor !== 0) {
@@ -48,3 +51,4 @@ function BgGrass(x, y, escala = 1) {
         }
     }
 }
+

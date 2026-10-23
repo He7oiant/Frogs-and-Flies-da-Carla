@@ -1,7 +1,7 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
 
-var mosca = new Mosca(0,300,10,10,3,30,1);
+var mosca = new Mosca(0,300,10,10,'black');
 
 Draw();
 
@@ -11,8 +11,11 @@ function Draw() {
     pincel.fillStyle = '#284dc7';
     pincel.fillRect(0,600,1200,300);
     BgGrass(110,610,7);
+    mosca.desenha();
+    mosca.move(3,30,1);
     
 }
+setInterval(Draw, 10);
 
 function BgGrass(x, y, escala = 1) {
     // Grade de pixels original da vitória-régia dupla com as marcas d'água internas (1 = folha verde, 2 = detalhe interno)

@@ -9,7 +9,6 @@ class Obj {
 }
 
 class Frog extends Obj {
-
 }
 
 class Mosca extends Obj {

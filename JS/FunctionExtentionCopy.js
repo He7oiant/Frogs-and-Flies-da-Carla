@@ -28,37 +28,38 @@ class Frog extends Player {
             for(j = 0 ; j> d; j++)
             {
                 y = (height/2)*j*j;
-                Jump(i,y,1);
+                Jump(i,y, 1);
             }
             await delay(speed);
         }
+        Sapinho(i,y,1);
     }
     Sapinho(x,y, escala = 1)
-{
-    var sapo = [
-        [0,0,0,0,1,1,0],
-        [0,0,1,1,0,1,1],
-        [1,1,1,1,1,1,1],
-        [1,1,1,1,0,0,0],
-        [1,1,1,1,1,0,0]
-    ];
-        for (let l = 0; l < sapo.length; l++) {
-        for (let c = 0; c < sapo[l].length; c++) {
-            const valor = sapo[l][c];
-            const tamanhoPixel = 1 * escala;
-            if (valor !== 0) {
-                // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
-                pincel.fillRect(
-                    x + (c * tamanhoPixel), 
-                    y + (l * tamanhoPixel), 
-                    tamanhoPixel, 
-                    tamanhoPixel
-                );
+    {
+        var sapo = [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,1,1],
+            [1,1,1,1,1,1,1],
+            [1,1,1,1,0,0,0],
+            [1,1,1,1,1,0,0]
+        ];
+            for (let l = 0; l < sapo.length; l++) {
+            for (let c = 0; c < sapo[l].length; c++) {
+                const valor = sapo[l][c];
+                const tamanhoPixel = 1 * escala;
+                if (valor !== 0) {
+                    // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
+                    pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
+                    pincel.fillRect(
+                        x + (c * tamanhoPixel), 
+                        y + (l * tamanhoPixel), 
+                        tamanhoPixel, 
+                        tamanhoPixel
+                    );
+                }
             }
         }
     }
-}
     Jump(x,y, escala = 1)
     {
         var sapopulando = [

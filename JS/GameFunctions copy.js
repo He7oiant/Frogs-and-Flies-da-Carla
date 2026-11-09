@@ -1,6 +1,6 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
-var frog1 = new Frog(200, 610, 10);
+var frog1 = new Player(200, 610, 10, 300);
 var lingua={
     x: 70,
     y: 20,
@@ -14,20 +14,21 @@ function Draw() {
     pincel.fillStyle = '#284dc7';
     pincel.fillRect(0,600,1200,300);
     BgGrass(110,610,7);
-    Sapinho(jogador.x, jogador.y, jogador.escala);
-    window.addEventListener('keydown', (event) => {
+    Sapinho(frog1.x, frog1.y, frog1.escala);
+}
+
+ window.addEventListener('keydown', (event) => {
         if (event.key === ' ' || event.code === 'Space') {
             console.log('A tecla de espaço foi pressionada!');
-            Lingua(jogador.x, jogador.y, jogador.escala, lingua.x, lingua.y);
-            setTimeout(()=>{ApagaLingua(jogador.x, jogador.y, jogador.escala, lingua.x, lingua.y)}, 2000);
+            frog1.Lingua(frog1.x, frog1.y, frog1.escala, lingua.x, lingua.y);
+            setTimeout(()=>{ApagaLingua(frog1.x, frog1.y, frog1.escala, lingua.x, lingua.y)}, 2000);
     }
     });
     window.addEventListener('keydown', (event) => {
         if (event.key === ' ' || event.code === 'ArrowUp') {
-            frog1.move(200, )
+            frog1.move(frog1.x, frog1.y, frog1.speed, frog1.height);
     }
     });
-}
 
 
 function BgGrass(x, y, escala = 1) {

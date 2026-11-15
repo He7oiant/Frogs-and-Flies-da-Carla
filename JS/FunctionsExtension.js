@@ -42,7 +42,7 @@ class Frog extends Player {
         }
         this.Sapinho(i,y,7);
     }*/
-    async move(height)
+    async move()
     {
         if(this.x > 1000)
         {
@@ -52,10 +52,22 @@ class Frog extends Player {
         {
             this.dir = 1*this.speed;
         }
+        this.y+=1;
+        for(let i = 0; i < 15; i++)
+        {
+            this.y -=this.speed*2000-2*i;
+            if(this.y>700)
+            {
+                this.y=700;
+                break;
+            }
+            this.x += this.dir;
+            console.log("Funciona " + this.y);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+        //
 
-        this.x += this.dir;
-
-        console.log("Funciona " + this.dir+ this.x);
+        console.log("Funciona " + this.y);
     }
     Sapinho(x, y, scale)
     {

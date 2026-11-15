@@ -16,7 +16,7 @@ function Draw() {
     frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
     window.addEventListener('keydown', (event) => {
         if (event.key === ' ' || event.code === 'ArrowUp') {
-            frog1.move(frog1.speed, frog1.height);
+            frog1.move();
     }
     });
 }

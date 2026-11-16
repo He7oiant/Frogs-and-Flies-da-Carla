@@ -8,7 +8,7 @@ class Obj {
     }
 }
 class Player{
-    constructor(x,y, speed, vspeed, height, dir)
+    constructor(x,y, speed, vspeed, height, dir, scale)
     {
         this.x = x;
         this.y = y;
@@ -16,7 +16,10 @@ class Player{
         this.vspeed = vspeed;
         this.height = height;
         this.dir = 1;
+        this.scale = scale;
         this.sapoandando = false;
+        this.gravity= 0.1;
+        this.sapopula = false;
     }
 }
 
@@ -50,7 +53,25 @@ class Frog extends Player {
         this.x += this.dir * this.speed;
         console.log("Funciona " + this.x);
     }
-    Sapinho(x, y)
+
+    Jump()
+    {
+        if (!this.sapopula)
+        {
+            return;
+        }
+        if(this.y > 700)
+        {
+            this.y = 700;
+            this.vspeed = 10;
+            this.sapopula=false;
+            return;
+        }
+        this.y -= this.vspeed;
+        this.vspeed -= this.gravity;
+    }
+
+    Sapinho(x, y, scale)
     {
         if(this.dir > 0)
         {
@@ -115,7 +136,7 @@ class Frog extends Player {
             for (let l = 0; l < sapo.length; l++) {
             for (let c = 0; c < sapo[l].length; c++) {
                 const valor = sapo[l][c];
-                const tamanhoPixel = 1;
+                const tamanhoPixel = 1*scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
                     pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
@@ -129,7 +150,7 @@ class Frog extends Player {
             }
         }
     }
-    Jump(x,y)
+    Jumpdraw(x,y)
     {
         if (this.dir > 0)
         {

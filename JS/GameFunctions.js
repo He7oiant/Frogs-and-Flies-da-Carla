@@ -1,7 +1,9 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
-var frog1 = new Frog(200, 700 , 1, 5, 0);
+var frog1 = new Frog(200, 700 , 4, 10, 5, 0, 2);
 var mosca = new Mosca(0,300,10,10,'black');
+var mosca2 = new Mosca(1220,500,10,10,'black');
+
 
 let sapoandando = false;
 
@@ -15,13 +17,18 @@ function Draw() {
     BgGrass(110,610,7);
     mosca.desenha();
     mosca.move(3,30,1);
-    frog1.Sapinho(frog1.x, frog1.y);
+    frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
+    mosca.move();
+    mosca2.desenha();
+    mosca2.move();
     window.addEventListener('keydown', (event) => {
     if (event.key === ' ' || event.code === 'ArrowUp') {
         frog1.sapoandando = true;
+        frog1.sapopula = true;
     }
     });
     frog1.move();
+    frog1.Jump();
 }
 setInterval(Draw, 10);
 

@@ -2,6 +2,8 @@ var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
 var frog1 = new Frog(200, 700, 5 , 0.001, 5, 0);
 var mosca = new Mosca(0,300,10,10,'black');
+var mosca2 = new Mosca(1220,500,10,10,'black');
+
 
 Draw();
 
@@ -12,7 +14,9 @@ function Draw() {
     pincel.fillRect(0,600,1200,300);
     BgGrass(110,610,7);
     mosca.desenha();
-    mosca.move(3,30,1);
+    mosca.move();
+    mosca2.desenha();
+    mosca2.move();
     frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
     window.addEventListener('keydown', (event) => {
         if (event.key === ' ' || event.code === 'ArrowUp') {

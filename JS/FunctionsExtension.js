@@ -156,41 +156,70 @@ class Frog extends Player {
 }
 
 class Mosca extends Obj {
-    // constructor(speed, flyHigh, roleta){
-    //     this.speed = speed;
-    //     this.flyHigh = flyHigh;
-    //     this.roleta = roleta;
-    // }
+    limit = true;
+    flyHighRange = 30; // Quanto ela pode subir a partir do y inicial
+    flyLowRange = 30;  // Quanto ela pode descer a partir do y inicial
+    flyHigh = 0;
+    flyLow = 0;
+    flySpeed = 2; 
+    speed = 3;
+    speedHigh = 10;
     desenha() {
         pincel.fillStyle = this.color;
-        pincel.fillRect(this.x, this.y, this.width, this.height);
-        pincel.fillRect(this.x + 10, this.y + 10, this.width, this.height);
-        pincel.fillRect(this.x + 20, this.y, this.width, this.height);
+        pincel.fillRect(this.x, this.y, this.width - 3, this.height - 3);
+        pincel.fillRect(this.x + 7, this.y + 7, this.width, this.height);
+        pincel.fillRect(this.x + 14, this.y, this.width - 3, this.height - 3);
     }
-    move(speed, flyHigh, roleta) {
-        this.x += speed;
 
-        this.roleta = Math.random();
-        if (roleta) { this.y++; }
-        else { this.y--; }
-        if (this.y > flyHigh) { this.y = flyHigh; }
-        if (this.y < -flyHigh) { this.y = -flyHigh; }
+    move() {
+        this.x += this.speed;
 
-        if (this.x > 1200 || this.x < 0) {
-            this.mudaPosicao(1);
+        // Define os limites baseados na posição Y onde a mosca spawnou/mudou de posição
+        if (this.limit) {
+            this.flyHigh = this.y - this.flyHighRange; // Teto (valor menor)
+            this.flyLow = this.y + this.flyLowRange;   // Chão (valor maior)
+            this.limit = false;
+            console.log('limite atualizado: teto=' + this.flyHigh + ', chão=' + this.flyLow);
+        }
+
+        // Move a mosca no eixo Y
+        this.y += this.flySpeed;
+
+        // Se passou do teto (ficou menor que o flyHigh), inverte para descer (positivo)
+        if (this.y < this.flyHigh) { 
+            this.flySpeed = Math.abs(this.flySpeed); 
+            console.log('voa baixo (batendo no teto, voltando a descer)');
+        }
+
+        // Se passou do chão (ficou maior que o flyLow), inverte para subir (negativo)
+        if (this.y > this.flyLow) { 
+            this.flySpeed = -Math.abs(this.flySpeed);
+            console.log('voa alto (batendo no chão, voltando a subir)');
+        }
+
+        if (this.x > 1250 || this.x < -50) {
+            this.mudaPosicao();
         }
     }
-    mudaPosicao(roleta) {
-        roleta = Math.random()
-        if (this.roleta) {
-            this.speed = Math.abs(this.speed);
-            this.x = -50;
 
+    mudaPosicao() {
+        this.limit = true; // Força recalcular os limites na nova posição Y
+        this.speed = Math.random() * this.speedHigh;
+        this.flySpeed = Math.random() * this.speedHigh-2;
+        let roleta = Math.random() >= 0.5;
+        if (roleta) {
+            this.x = -20;
+            this.speed = Math.abs(this.speed); 
+            console.log('velocidade positiva');
+        } else {
+            this.x = 1220;
+            this.speed = -Math.abs(this.speed); 
+            console.log('velocidade negativa');
         }
-        else {
-            this.speed = speed * -1;
-            this.x = 1250;
-        }
-        this.y = Math.random() * (600);
+        
+        // Sorteia um Y que dê margem para respeitar os 30 pixels de teto e chão (ex: entre 50 e 550)
+        this.y = Math.random() * 500 + 180;
+
+        console.log('mudou posicao para y = ' + this.y);
     }
 }

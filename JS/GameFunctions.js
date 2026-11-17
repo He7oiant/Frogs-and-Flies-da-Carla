@@ -16,6 +16,10 @@ let inicioJogo = Date.now();
 let jogoAtivo = true;
 let minhacor= '#0bb7e2';
 
+//placar
+var pontos1 = 0; 
+var pontos2 = 0;
+
 
 Draw();
 
@@ -77,11 +81,18 @@ function Draw() {
     frog1.Jump();
     lingua1.atualiza(frog1.dir); // Atualiza a língua com a direção do sapo
     lingua1.desenha(frog1.x, frog1.y, frog1.dir);
+    pontos1 = verificarColisoes(frog1, mosca, lingua1, pontos1);
+    pontos1 = verificarColisoes(frog1, mosca2, lingua1, pontos1);
+
 
     frog2.move();
     frog2.Jump();
     lingua2.atualiza(frog2.dir); // Atualiza a língua com a direção do sapo
     lingua2.desenha(frog2.x, frog2.y, frog2.dir);
+    pontos2 = verificarColisoes(frog2, mosca, lingua2, pontos2);
+    pontos2 = verificarColisoes(frog2, mosca2, lingua2, pontos2);
+
+    Placar();
 }
 setInterval(Draw, 10);
 
@@ -112,7 +123,48 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
+function verificarColisoes(frog, mosca, lingua, pontos) {
+    const hitboxLingua = lingua.getHitbox(
+        frog.x,
+        frog.y,
+        frog.dir
+    );
 
+    // Se não existe hitbox, não há colisão
+    if (!hitboxLingua) {
+        return pontos;
+    }
+
+    // Verifica a colisão
+    if (colidiu(hitboxLingua, mosca)) {
+
+        // Remove a mosca do array
+        mosca.mudaPosicao();
+
+        // Adiciona pontuação
+        pontos += 1;
+    }
+    return pontos; // Retorna a pontuação atualizada
+
+}
+
+function colidiu(a, b) {
+
+    return (
+        a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y
+    );
+
+}
+function Placar() {
+    pincel.font = '90px Arial';
+    pincel.fillStyle = frog1.color;
+    pincel.fillText(pontos1, 300, 300);
+    pincel.fillStyle = frog2.color;
+    pincel.fillText(pontos2, 850, 300);
+}
 
 function BgGrass(x, y, escala = 1) {
     // Grade de pixels original da vitória-régia dupla com as marcas d'água internas (1 = folha verde, 2 = detalhe interno)

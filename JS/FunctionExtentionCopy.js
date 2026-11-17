@@ -8,7 +8,7 @@ class Obj {
     }
 }
 class Player {
-    constructor(x, y, speed, vspeed, height, dir, scale) {
+    constructor(x, y, speed, vspeed, height, dir, scale, color) {
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -19,6 +19,7 @@ class Player {
         this.sapoandando = false;
         this.gravity = 0.1;
         this.sapopula = false;
+        this.color = color;
     }
 }
 
@@ -44,7 +45,6 @@ class Frog extends Player {
             return;
         }
         this.x += this.dir * this.speed;
-        console.log("Funciona " + this.x);
     }
 
     Jump() {
@@ -126,7 +126,7 @@ class Frog extends Player {
                 const tamanhoPixel = 1 * scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' : pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? this.color : pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
                         this.x + (c * tamanhoPixel),
                         this.y + (l * tamanhoPixel),
@@ -234,7 +234,7 @@ class Frog extends Player {
                 const tamanhoPixel = 1 * scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' : pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? this.color : pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
                         this.x + (c * tamanhoPixel),
                         this.y + (l * tamanhoPixel),
@@ -268,10 +268,10 @@ class Lingua extends Obj {
             pincel.fillRect(this.x + fixoX, fixoY + this.y, this.width, this.height);
         }
         else if (dir < 0) {
-            
+
             pincel.fillRect(fixoX, fixoY + this.y, this.width, this.height);
         }
-        
+
     }
 
     dispara() {
@@ -290,9 +290,9 @@ class Lingua extends Obj {
             if (dir > 0) {
                 this.width += this.velocidade;
                 if (this.width >= this.maxWidth) {
-                this.width = this.maxWidth; // Limita a largura máxima
-                this.estado = 'diminuindo'; // Marca que a língua está diminuindo
-            }
+                    this.width = this.maxWidth; // Limita a largura máxima
+                    this.estado = 'diminuindo'; // Marca que a língua está diminuindo
+                }
             }
             else if (dir < 0) {
                 this.width -= this.velocidade;
@@ -301,15 +301,15 @@ class Lingua extends Obj {
                     this.estado = 'diminuindo'; // Marca que a língua está diminuindo
                 }
             }
-            
+
         }
         else if (this.estado === 'diminuindo') {
             if (dir > 0) {
                 this.width -= this.velocidade;
                 if (this.width <= 0) {
-                this.width = 0;
-                this.estado = 'parado'; // Marca que a língua está parada
-            }
+                    this.width = 0;
+                    this.estado = 'parado'; // Marca que a língua está parada
+                }
             }
             else if (dir < 0) {
                 this.width += this.velocidade;
@@ -318,10 +318,31 @@ class Lingua extends Obj {
                     this.estado = 'parado'; // Marca que a língua está parada
                 }
             }
-            
+
         }
     }
+
+    getHitbox(fixoX, fixoY, dir) {
+
+        // A língua parada não possui hitbox ativa
+        if (this.estado !== 'crescendo') {
+            return null;
+        }
+
+        return {
+            x: dir > 0
+                ? fixoX + this.x
+                : fixoX + this.width,
+
+            y: fixoY + this.y,
+
+            width: Math.abs(this.width),
+            height: this.height
+        };
+    }
+
 }
+
 
 class Mosca extends Obj {
     limit = true;
@@ -347,7 +368,6 @@ class Mosca extends Obj {
             this.flyHigh = this.y - this.flyHighRange; // Teto (valor menor)
             this.flyLow = this.y + this.flyLowRange;   // Chão (valor maior)
             this.limit = false;
-            console.log('limite atualizado: teto=' + this.flyHigh + ', chão=' + this.flyLow);
         }
 
         // Move a mosca no eixo Y
@@ -356,13 +376,11 @@ class Mosca extends Obj {
         // Se passou do teto (ficou menor que o flyHigh), inverte para descer (positivo)
         if (this.y < this.flyHigh) {
             this.flySpeed = Math.abs(this.flySpeed);
-            console.log('voa baixo (batendo no teto, voltando a descer)');
         }
 
         // Se passou do chão (ficou maior que o flyLow), inverte para subir (negativo)
         if (this.y > this.flyLow) {
             this.flySpeed = -Math.abs(this.flySpeed);
-            console.log('voa alto (batendo no chão, voltando a subir)');
         }
 
         if (this.x > 1250 || this.x < -50) {
@@ -377,17 +395,13 @@ class Mosca extends Obj {
         let roleta = Math.random() >= 0.5;
         if (roleta) {
             this.x = -20;
-            this.speed = Math.abs(this.speed);
-            console.log('velocidade positiva');
+            this.speed = Math.abs(this.speed)
         } else {
             this.x = 1220;
             this.speed = -Math.abs(this.speed);
-            console.log('velocidade negativa');
         }
 
         // Sorteia um Y que dê margem para respeitar os 30 pixels de teto e chão (ex: entre 50 e 550)
         this.y = Math.random() * 500 + 180;
-
-        console.log('mudou posicao para y = ' + this.y);
     }
 }

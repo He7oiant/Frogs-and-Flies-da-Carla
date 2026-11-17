@@ -50,7 +50,6 @@ class Frog extends Player {
             return;
         }
         this.x += this.dir * this.speed;
-        console.log("Funciona " + this.x);
     }
 
     Jump()
@@ -337,6 +336,25 @@ class Lingua extends Obj {
             
         }
     }
+
+    getHitbox(fixoX, fixoY, dir) {
+
+        // A língua parada não possui hitbox ativa
+        if (this.estado !== 'crescendo') {
+            return null;
+        }
+
+        return {
+            x: dir > 0
+                ? fixoX + this.x
+                : fixoX + this.width,
+
+            y: fixoY + this.y,
+
+            width: Math.abs(this.width),
+            height: this.height
+        };
+    }
 }
 
 
@@ -346,7 +364,7 @@ class Mosca extends Obj {
     flyLowRange = 30;  // Quanto ela pode descer a partir do y inicial
     flyHigh = 0;
     flyLow = 0;
-    flySpeed = 2; 
+    flySpeed = 2;
     speed = 3;
     speedHigh = 10;
     desenha() {
@@ -364,22 +382,19 @@ class Mosca extends Obj {
             this.flyHigh = this.y - this.flyHighRange; // Teto (valor menor)
             this.flyLow = this.y + this.flyLowRange;   // Chão (valor maior)
             this.limit = false;
-            console.log('limite atualizado: teto=' + this.flyHigh + ', chão=' + this.flyLow);
         }
 
         // Move a mosca no eixo Y
         this.y += this.flySpeed;
 
         // Se passou do teto (ficou menor que o flyHigh), inverte para descer (positivo)
-        if (this.y < this.flyHigh) { 
-            this.flySpeed = Math.abs(this.flySpeed); 
-            console.log('voa baixo (batendo no teto, voltando a descer)');
+        if (this.y < this.flyHigh) {
+            this.flySpeed = Math.abs(this.flySpeed);
         }
 
         // Se passou do chão (ficou maior que o flyLow), inverte para subir (negativo)
-        if (this.y > this.flyLow) { 
+        if (this.y > this.flyLow) {
             this.flySpeed = -Math.abs(this.flySpeed);
-            console.log('voa alto (batendo no chão, voltando a subir)');
         }
 
         if (this.x > 1250 || this.x < -50) {
@@ -390,21 +405,18 @@ class Mosca extends Obj {
     mudaPosicao() {
         this.limit = true; // Força recalcular os limites na nova posição Y
         this.speed = Math.random() * this.speedHigh;
-        this.flySpeed = Math.random() * this.speedHigh-2;
+        this.flySpeed = Math.random() * this.speedHigh - 2;
         let roleta = Math.random() >= 0.5;
         if (roleta) {
             this.x = -20;
-            this.speed = Math.abs(this.speed); 
-            console.log('velocidade positiva');
+            this.speed = Math.abs(this.speed)
         } else {
             this.x = 1220;
-            this.speed = -Math.abs(this.speed); 
-            console.log('velocidade negativa');
+            this.speed = -Math.abs(this.speed);
         }
-        
+
         // Sorteia um Y que dê margem para respeitar os 30 pixels de teto e chão (ex: entre 50 e 550)
         this.y = Math.random() * 500 + 180;
-
-        console.log('mudou posicao para y = ' + this.y);
     }
 }
+

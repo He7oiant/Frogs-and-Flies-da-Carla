@@ -10,7 +10,7 @@ var mosca = new Mosca(0, 300, 10, 10, 'black');
 var mosca2 = new Mosca(1220, 500, 10, 10, 'black');
 
 //para o timer
-let tempoInicial = 180;
+let tempoInicial = 2;
 let tempoRestante = tempoInicial;
 let inicioJogo = Date.now();
 let jogoAtivo = true;
@@ -56,6 +56,8 @@ function Draw() {
     if(!jogoAtivo)
     {
         pincel.clearRect(0,0,1200,1200);
+        EndGame();
+        Placar();
         return;
     }
     pincel.fillStyle = minhacor;
@@ -165,7 +167,12 @@ function Placar() {
     pincel.fillStyle = frog2.color;
     pincel.fillText(pontos2, 850, 300);
 }
-
+function EndGame()
+{
+    pincel.font = '90px Arial';
+    pincel.fillStyle = frog1.color;
+    pincel.fillText("End Game",400, 700);
+}
 function BgGrass(x, y, escala = 1) {
     // Grade de pixels original da vitória-régia dupla com as marcas d'água internas (1 = folha verde, 2 = detalhe interno)
     const mapaPlanta = [

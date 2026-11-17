@@ -8,7 +8,7 @@ class Obj {
     }
 }
 class Player{
-    constructor(x,y, speed, vspeed, height, dir, scale)
+    constructor(x,y, speed, vspeed, height, dir, scale, color)
     {
         this.x = x;
         this.y = y;
@@ -20,6 +20,7 @@ class Player{
         this.sapoandando = false;
         this.gravity= 0.1;
         this.sapopula = false;
+        this.color = color;
     }
 }
 
@@ -137,7 +138,7 @@ class Frog extends Player {
                 const tamanhoPixel = 1*scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? this.color :  pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
                         this.x + (c * tamanhoPixel), 
                         this.y + (l * tamanhoPixel), 
@@ -249,7 +250,7 @@ class Frog extends Player {
                 const tamanhoPixel = 1* scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? this.color :  pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
                         this.x + (c * tamanhoPixel), 
                         this.y + (l * tamanhoPixel), 

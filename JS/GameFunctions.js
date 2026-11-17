@@ -1,5 +1,7 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
+
+//entidades do jogo
 var frog1 = new Frog(200, 700, 4, 10, 5, 0, 2, 'orange');
 var frog2 = new Frog(1000, 700, 4, 10, 5, 0, 2, 'black');
 var lingua1 = new Lingua();
@@ -7,13 +9,52 @@ var lingua2 = new Lingua();
 var mosca = new Mosca(0, 300, 10, 10, 'black');
 var mosca2 = new Mosca(1220, 500, 10, 10, 'black');
 
+//para o timer
+let tempoInicial = 180;
+let tempoRestante = tempoInicial;
+let inicioJogo = Date.now();
+let jogoAtivo = true;
+let minhacor= '#0bb7e2';
 
-let sapoandando = false;
 
 Draw();
 
+function Timer()
+{
+    if(!jogoAtivo)
+    {
+        return;
+    }
+
+    let tempoDecorrido = (Date.now() - inicioJogo) / 1000;
+
+    tempoRestante = Math.max(0, tempoInicial - Math.floor(tempoDecorrido));
+    if(tempoRestante<= 120)
+    {
+        if(tempoRestante<=60)
+        {
+            minhacor= '#14044b';
+        }
+        else{
+            minhacor= '#111dbe';
+        }
+    }
+    if(tempoRestante <= 0)
+    {
+        jogoAtivo = false;
+        console.log("Fim de jogo!");
+    }
+}
+
 function Draw() {
-    pincel.fillStyle = '#0bb7e2';
+
+    Timer();
+    if(!jogoAtivo)
+    {
+        pincel.clearRect(0,0,1200,1200);
+        return;
+    }
+    pincel.fillStyle = minhacor;
     pincel.fillRect(0, 0, 1200, 900);
     pincel.fillStyle = '#284dc7';
     pincel.fillRect(0, 600, 1200, 300);

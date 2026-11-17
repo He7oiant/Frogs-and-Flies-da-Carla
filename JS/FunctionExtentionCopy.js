@@ -7,82 +7,238 @@ class Obj {
         this.color = color;
     }
 }
-class Player{
-    constructor(x,y,scale, speed, height)
-    {
+class Player {
+    constructor(x, y, speed, vspeed, height, dir, scale) {
         this.x = x;
         this.y = y;
-        this.scale = scale;
-        this.speed = speed
+        this.speed = speed;
+        this.vspeed = vspeed;
         this.height = height;
+        this.dir = 1;
+        this.scale = scale;
+        this.sapoandando = false;
+        this.gravity = 0.1;
+        this.sapopula = false;
     }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 class Frog extends Player {
-    async move(x, y, speed, height)
-    {
-        dlim = x+150;
-
-        for(i = x; i > d ; i++)
-        {
-            for(j = 0 ; j> d; j++)
-            {
-                y = (height/2)*j*j;
-                Jump(i,y, 1);
-            }
-            await delay(speed);
+    async move() {
+        if (!this.sapoandando) {
+            return;
         }
-        Sapinho(i,y,1);
+        if (this.x > 1000) {
+            this.dir = -1;
+            this.sapoandando = false;
+            this.x = 1000;
+            return;
+        }
+        else if (this.x < 200) {
+            this.dir = 1;
+            this.sapoandando = false;
+            this.x = 200;
+            return;
+        }
+        this.x += this.dir * this.speed;
+        console.log("Funciona " + this.x);
     }
-    Sapinho(x,y, escala = 1)
-    {
-        var sapo = [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,1,1],
-            [1,1,1,1,1,1,1],
-            [1,1,1,1,0,0,0],
-            [1,1,1,1,1,0,0]
-        ];
-            for (let l = 0; l < sapo.length; l++) {
+
+    Jump() {
+        if (!this.sapopula) {
+            return;
+        }
+        if (this.y > 700) {
+            this.y = 700;
+            this.vspeed = 10;
+            this.sapopula = false;
+            return;
+        }
+        this.y -= this.vspeed;
+        this.vspeed -= this.gravity;
+    }
+
+    Sapinho(x, y, scale) {
+        if (this.dir > 0) {
+            var sapo = [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ];
+        }
+        else if (this.dir < 0) {
+            var sapo = [
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ];
+        }
+        for (let l = 0; l < sapo.length; l++) {
             for (let c = 0; c < sapo[l].length; c++) {
                 const valor = sapo[l][c];
-                const tamanhoPixel = 1 * escala;
+                const tamanhoPixel = 1 * scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? '#d66113' : pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
-                        x + (c * tamanhoPixel), 
-                        y + (l * tamanhoPixel), 
-                        tamanhoPixel, 
+                        this.x + (c * tamanhoPixel),
+                        this.y + (l * tamanhoPixel),
+                        tamanhoPixel,
                         tamanhoPixel
                     );
                 }
             }
         }
     }
-    Jump(x,y, escala = 1)
-    {
-        var sapopulando = [
-            [0,0,0,0,1,1,0],
-            [0,0,1,1,0,1,1],
-            [1,1,1,1,1,1,1],
-            [1,1,1,1,0,0,0],
-            [1,1,0,0,0,0,0],
-            [1,0,0,0,0,0,0],
-            [1,0,0,0,0,0,0],
-            [1,0,0,0,0,0,0]
-        ];
-            for (let l = 0; l < sapopulando.length; l++) {
+    Jumpdraw(x, y, scale) {
+        if (!this.sapopula) {
+            return;
+        }
+        if (this.dir > 0) {
+            var sapopulando = [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            ];
+        }
+        else if (this.dir < 0) {
+            var sapopulando = [
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1]
+            ]
+        }
+
+        for (let l = 0; l < sapopulando.length; l++) {
             for (let c = 0; c < sapopulando[l].length; c++) {
                 const valor = sapopulando[l][c];
-                const tamanhoPixel = 1 * escala;
+                const tamanhoPixel = 1 * scale;
                 if (valor !== 0) {
                     // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#d66113' :  pincel.fillStyle = '#284dc7';
+                    pincel.fillStyle = valor === 1 ? '#d66113' : pincel.fillStyle = '#284dc7';
                     pincel.fillRect(
-                        x + (c * tamanhoPixel), 
-                        y + (l * tamanhoPixel), 
-                        tamanhoPixel, 
+                        this.x + (c * tamanhoPixel),
+                        this.y + (l * tamanhoPixel),
+                        tamanhoPixel,
                         tamanhoPixel
                     );
                 }
@@ -91,90 +247,147 @@ class Frog extends Player {
     }
 }
 
-class Tongue extends Frog{
-    Lingua(x,y, escala, x2, y2)
-    {    
-        var lingua = [
-            [1,1,1,1,1,1]
-        ];
-            for (let l = 0; l < lingua.length; l++) {
-            for (let c = 0; c < lingua[l].length; c++) {
-                const valor = lingua[l][c];
-                const tamanhoPixel = 1 * escala;
-                if (valor !== 0) {
-                    // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.fillStyle = valor === 1 ? '#ad7854' :  pincel.fillStyle = '#0004ff00';
-                    pincel.fillRect(
-                        x2 + x + (c * tamanhoPixel), 
-                        y2 + y + (l * tamanhoPixel), 
-                        tamanhoPixel, 
-                        tamanhoPixel
-                    );
-                }
-            }
+class Lingua extends Obj {
+    constructor(x, y, width, height, color) {
+        super(x, y, width, height, color);
+    }
+    x = 50;
+    y = 20;
+    width = 0;
+    height = 7;
+    color = '#d61313';
+
+    velocidade = 5; // Velocidade de crescimento da língua
+    maxWidth = 100; // Largura máxima da língua
+    estado = 'parado'; // Indica se a língua está parada ou em movimento
+
+    desenha(fixoX, fixoY, dir) {
+        pincel.fillStyle = this.color;
+
+        if (dir > 0) {
+            pincel.fillRect(this.x + fixoX, fixoY + this.y, this.width, this.height);
         }
+        else if (dir < 0) {
+            
+            pincel.fillRect(fixoX, fixoY + this.y, this.width, this.height);
+        }
+        
     }
 
-    ApagaLingua(x,y, escala, x2, y2)
-    {
-        var zero=[
-            [1,1,1,1,1,1]
-        ];
-            for (let l = 0; l < zero.length; l++) {
-                        console.log ("estou aqui");
-            for (let c = 0; c < zero[l].length; c++) {
-                const valor = zero[l][c];
-                const tamanhoPixel = 1 * escala;
-                if (valor !== 0) {
-                    // Define a cor: verde principal (#59A034) ou tom de detalhe/veia da folha (#4A802B)
-                    pincel.clearRect(
-                        x2 + x + (c * tamanhoPixel), 
-                        y2 + y + (l * tamanhoPixel), 
-                        tamanhoPixel, 
-                        tamanhoPixel
-                    );
+    dispara() {
+        if (this.estado !== 'parado') {
+            return;
+        }
+        this.estado = 'crescendo'; // Marca que a língua está em movimento
+        this.width = 0; // Reinicia a largura da língua
+    }
+
+    atualiza(dir) {
+        if (this.estado === 'parado') {
+            return;
+        }
+        if (this.estado === 'crescendo') {
+            if (dir > 0) {
+                this.width += this.velocidade;
+                if (this.width >= this.maxWidth) {
+                this.width = this.maxWidth; // Limita a largura máxima
+                this.estado = 'diminuindo'; // Marca que a língua está diminuindo
+            }
+            }
+            else if (dir < 0) {
+                this.width -= this.velocidade;
+                if (this.width <= -this.maxWidth) {
+                    this.width = -this.maxWidth; // Limita a largura mínima
+                    this.estado = 'diminuindo'; // Marca que a língua está diminuindo
                 }
             }
+            
+        }
+        else if (this.estado === 'diminuindo') {
+            if (dir > 0) {
+                this.width -= this.velocidade;
+                if (this.width <= 0) {
+                this.width = 0;
+                this.estado = 'parado'; // Marca que a língua está parada
+            }
+            }
+            else if (dir < 0) {
+                this.width += this.velocidade;
+                if (this.width >= 0) {
+                    this.width = 0;
+                    this.estado = 'parado'; // Marca que a língua está parada
+                }
+            }
+            
         }
     }
 }
 
 class Mosca extends Obj {
-    // constructor(speed, flyHigh, roleta){
-    //     this.speed = speed;
-    //     this.flyHigh = flyHigh;
-    //     this.roleta = roleta;
-    // }
+    limit = true;
+    flyHighRange = 30; // Quanto ela pode subir a partir do y inicial
+    flyLowRange = 30;  // Quanto ela pode descer a partir do y inicial
+    flyHigh = 0;
+    flyLow = 0;
+    flySpeed = 2;
+    speed = 3;
+    speedHigh = 10;
     desenha() {
         pincel.fillStyle = this.color;
-        pincel.fillRect(this.x, this.y, this.width, this.height);
-        pincel.fillRect(this.x + 10, this.y + 10, this.width, this.height);
-        pincel.fillRect(this.x + 20, this.y, this.width, this.height);
+        pincel.fillRect(this.x, this.y, this.width - 3, this.height - 3);
+        pincel.fillRect(this.x + 7, this.y + 7, this.width, this.height);
+        pincel.fillRect(this.x + 14, this.y, this.width - 3, this.height - 3);
     }
-    move(speed, flyHigh, roleta) {
-        this.x += speed;
 
-        this.roleta = Math.random();
-        if (roleta) { this.y++; }
-        else { this.y--; }
-        if (this.y > flyHigh) { this.y = flyHigh; }
-        if (this.y < -flyHigh) { this.y = -flyHigh; }
+    move() {
+        this.x += this.speed;
 
-        if (this.x > 1200 || this.x < 0) {
-            this.mudaPosicao(1);
+        // Define os limites baseados na posição Y onde a mosca spawnou/mudou de posição
+        if (this.limit) {
+            this.flyHigh = this.y - this.flyHighRange; // Teto (valor menor)
+            this.flyLow = this.y + this.flyLowRange;   // Chão (valor maior)
+            this.limit = false;
+            console.log('limite atualizado: teto=' + this.flyHigh + ', chão=' + this.flyLow);
+        }
+
+        // Move a mosca no eixo Y
+        this.y += this.flySpeed;
+
+        // Se passou do teto (ficou menor que o flyHigh), inverte para descer (positivo)
+        if (this.y < this.flyHigh) {
+            this.flySpeed = Math.abs(this.flySpeed);
+            console.log('voa baixo (batendo no teto, voltando a descer)');
+        }
+
+        // Se passou do chão (ficou maior que o flyLow), inverte para subir (negativo)
+        if (this.y > this.flyLow) {
+            this.flySpeed = -Math.abs(this.flySpeed);
+            console.log('voa alto (batendo no chão, voltando a subir)');
+        }
+
+        if (this.x > 1250 || this.x < -50) {
+            this.mudaPosicao();
         }
     }
-    mudaPosicao(roleta) {
-        roleta = Math.random()
-        if (this.roleta) {
+
+    mudaPosicao() {
+        this.limit = true; // Força recalcular os limites na nova posição Y
+        this.speed = Math.random() * this.speedHigh;
+        this.flySpeed = Math.random() * this.speedHigh - 2;
+        let roleta = Math.random() >= 0.5;
+        if (roleta) {
+            this.x = -20;
             this.speed = Math.abs(this.speed);
-            this.x = -50;
+            console.log('velocidade positiva');
+        } else {
+            this.x = 1220;
+            this.speed = -Math.abs(this.speed);
+            console.log('velocidade negativa');
+        }
 
-        }
-        else {
-            this.speed = speed * -1;
-            this.x = 1250;
-        }
-        this.y = Math.random() * (600);
+        // Sorteia um Y que dê margem para respeitar os 30 pixels de teto e chão (ex: entre 50 e 550)
+        this.y = Math.random() * 500 + 180;
+
+        console.log('mudou posicao para y = ' + this.y);
     }
 }

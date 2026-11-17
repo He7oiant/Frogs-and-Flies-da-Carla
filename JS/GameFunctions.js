@@ -94,6 +94,7 @@ window.addEventListener('keydown', (event) => {
 
 window.addEventListener('keydown', (event) => {
     if (event.code === 'ArrowUp') {
+        event.preventDefault();
         frog2.sapoandando = true;
         frog2.sapopula = true;
     }

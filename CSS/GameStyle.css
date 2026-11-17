@@ -214,3 +214,35 @@ footer p {
         height: auto;
     }
 }
+.jogador-preto {
+    border-top: 6px solid #252525;
+}
+
+.jogador-laranja {
+    border-top: 6px solid #ed8525;
+}
+
+.jogador-preto h3 {
+    color: #252525;
+}
+
+.jogador-laranja h3 {
+    color: #ed8525;
+}
+
+/* DESTAQUE DAS TECLAS */
+
+.jogador-preto .tecla {
+    background-color: #252525;
+    box-shadow: 0 5px #080808;
+}
+
+.jogador-laranja .tecla {
+    background-color: #ed8525;
+    box-shadow: 0 5px #a84d0c;
+}
+
+.tecla {
+    margin-top: 20px;
+    margin-bottom: 12px;
+}

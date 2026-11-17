@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frogs & Flies</title>
+    <title>Sapos Obesos</title>
 
     <link rel="stylesheet" href="CSS/GameStyle.css">
 </head>
@@ -12,7 +12,7 @@
 <body>
 
     <header>
-        <h1>Frogs & Flies</h1>
+        <h1>SAPOS OBESOS</h1>
         <p>Uma disputa de saltos, línguas e moscas!</p>
 
         <nav>
@@ -25,76 +25,96 @@
 
     <main>
 
+        <!-- HISTÓRIA -->
         <section id="historia" class="informacao">
+
             <h2>História</h2>
 
             <p>
                 Frogs and Flies, também conhecido como Frog Bog,
                 foi criado pela Mattel em 1982 para o console
-                Intellivision. Posteriormente, recebeu uma versão
+                Intellivision. Posteriormente, recebeu um porte
                 para o Atari.
             </p>
 
-            <p>
-                Inspirado nesse clássico, Sapos Obesos traz uma
-                disputa entre dois sapos que precisam capturar
-                o maior número possível de insetos.
-            </p>
         </section>
 
+        <!-- DESCRIÇÃO -->
         <section id="descricao" class="informacao">
+
             <h2>Descrição do jogo</h2>
 
             <p>
-                Os sapos precisam pular para capturar os insetos
-                espalhados pela tela. Seus saltos executam um
-                movimento parabólico, sofrendo a ação da gravidade.
+                Os sapos pulam, ou seja, executam um movimento
+                parabólico no ar, sofrendo a ação da gravidade.
+                O jogador controla a direção do pulo antes de
+                o sapo saltar. Durante o salto, pode apertar
+                o botão da língua para capturar os insetos
+                espalhados pela tela.
             </p>
 
             <p>
-                Antes de realizar o salto, o jogador controla
-                a direção do movimento. Durante o pulo, pode
-                utilizar a língua para capturar os insetos.
+                Os sapos possuem cores diferentes para evitar
+                confusão entre os jogadores. Os insetos possuem
+                cores destoantes do cenário e apresentam
+                movimentação em pixels.
             </p>
 
             <p>
-                Cada jogador controla um sapo de cor diferente,
-                facilitando a identificação durante a partida.
-                Os insetos possuem cores que contrastam com o
-                cenário e apresentam movimentação em pixels.
+                O jogo se passa em torno de um único dia.
+                Quando o dia acaba, os pontos obtidos pela
+                captura de insetos são comparados, e o sapo
+                que capturou mais insetos é declarado vencedor.
+                Uma tela de encerramento (End) aparece ao final
+                da partida.
             </p>
 
-            <p>
-                A partida representa um único dia. Quando o
-                tempo acaba, os pontos de cada jogador são
-                comparados. O sapo que capturou mais insetos
-                vence e uma tela de encerramento é exibida.
-            </p>
         </section>
 
+        <!-- CONTROLES -->
         <section id="controles" class="informacao">
+
             <h2>Controles</h2>
 
             <div class="controles-container">
 
-                <div class="controle">
-                    <h3>Jogador 1</h3>
+                <!-- JOGADOR PRETO -->
+                <div class="controle jogador-preto">
+
+                    <h3>Jogador 1 - Preto</h3>
+
                     <div class="tecla">↑</div>
-                    <p>Sapo Laranja</p>
-                    <p>Utilize a seta para cima para pular.</p>
+                    <p><strong>Pular</strong></p>
+                    <p>Utilize a seta para cima.</p>
+
+                    <div class="tecla">←</div>
+                    <p><strong>Usar a língua</strong></p>
+                    <p>Utilize a seta para a esquerda.</p>
+
                 </div>
 
-                <div class="controle">
-                    <h3>Jogador 2</h3>
+                <!-- JOGADOR LARANJA -->
+                <div class="controle jogador-laranja">
+
+                    <h3>Jogador 2 - Laranja</h3>
+
                     <div class="tecla">W</div>
-                    <p>Sapo Cinza</p>
-                    <p>Utilize a tecla W para pular.</p>
+                    <p><strong>Pular</strong></p>
+                    <p>Utilize a tecla W.</p>
+
+                    <div class="tecla">E</div>
+                    <p><strong>Usar a língua</strong></p>
+                    <p>Utilize a tecla E.</p>
+
                 </div>
 
             </div>
+
         </section>
 
+        <!-- JOGO -->
         <section id="jogar" class="jogo">
+
             <h2>Hora de jogar!</h2>
 
             <p>
@@ -103,9 +123,11 @@
             </p>
 
             <div id="game">
+
                 <canvas id="canvas" width="1200" height="900">
                     Seu navegador não suporta Canvas.
                 </canvas>
+
             </div>
 
             <p class="legenda">

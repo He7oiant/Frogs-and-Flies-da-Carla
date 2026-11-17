@@ -1,6 +1,7 @@
 var tela = document.querySelector('canvas');
 var pincel = tela.getContext('2d');
-var frog1 = new Frog(200, 700 , 4, 10, 5, 0, 2);
+var frog1 = new Frog(200, 700 , 4, 10, 5, 0, 2, 'orange');
+var frog2 = new Frog(1000 , 700, 4, 10, 5, 0, 2, 'black');
 var mosca = new Mosca(0,300,10,10,'black');
 var mosca2 = new Mosca(1220,500,10,10,'black');
 
@@ -22,6 +23,11 @@ function Draw() {
         frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
     }
     frog1.Jumpdraw(frog1.x, frog1.y, frog1.scale);
+    if(!frog2.sapopula)
+    {
+        frog2.Sapinho(frog2.x, frog2.y, frog2.scale);
+    }
+    frog2.Jumpdraw(frog2.x, frog2.y, frog2.scale);
     mosca.move();
     mosca2.desenha();
     mosca2.move();
@@ -33,6 +39,15 @@ function Draw() {
     });
     frog1.move();
     frog1.Jump();
+
+    window.addEventListener('keydown', (event) => {
+    if ( event.code === 'KeyW') {
+        frog2.sapoandando = true;
+        frog2.sapopula = true;
+    }
+    });
+    frog2.move();
+    frog2.Jump();
 }
 setInterval(Draw, 10);
 

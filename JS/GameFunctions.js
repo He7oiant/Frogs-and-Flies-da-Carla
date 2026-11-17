@@ -10,7 +10,7 @@ var mosca = new Mosca(0, 300, 10, 10, 'black');
 var mosca2 = new Mosca(1220, 500, 10, 10, 'black');
 
 //para o timer
-let tempoInicial = 2;
+let tempoInicial = 180;
 let tempoRestante = tempoInicial;
 let inicioJogo = Date.now();
 let jogoAtivo = true;

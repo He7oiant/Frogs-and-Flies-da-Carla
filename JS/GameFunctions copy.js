@@ -28,7 +28,6 @@ function Draw() {
 
     frog1.move();
     frog1.Jump();
-    
     lingua1.atualiza(frog1.dir); // Atualiza a língua com a direção do sapo
     lingua1.desenha(frog1.x, frog1.y, frog1.dir);
 }

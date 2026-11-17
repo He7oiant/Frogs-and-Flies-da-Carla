@@ -263,6 +263,83 @@ class Frog extends Player {
     }
 }
 
+class Lingua extends Obj {
+    constructor(x, y, width, height, color) {
+        super(x, y, width, height, color);
+    }
+    x = 50;
+    y = 20;
+    width = 0;
+    height = 7;
+    color = '#d61313';
+
+    velocidade = 5; // Velocidade de crescimento da língua
+    maxWidth = 100; // Largura máxima da língua
+    estado = 'parado'; // Indica se a língua está parada ou em movimento
+
+    desenha(fixoX, fixoY, dir) {
+        pincel.fillStyle = this.color;
+
+        if (dir > 0) {
+            pincel.fillRect(this.x + fixoX, fixoY + this.y, this.width, this.height);
+        }
+        else if (dir < 0) {
+            
+            pincel.fillRect(fixoX, fixoY + this.y, this.width, this.height);
+        }
+        
+    }
+
+    dispara() {
+        if (this.estado !== 'parado') {
+            return;
+        }
+        this.estado = 'crescendo'; // Marca que a língua está em movimento
+        this.width = 0; // Reinicia a largura da língua
+    }
+
+    atualiza(dir) {
+        if (this.estado === 'parado') {
+            return;
+        }
+        if (this.estado === 'crescendo') {
+            if (dir > 0) {
+                this.width += this.velocidade;
+                if (this.width >= this.maxWidth) {
+                this.width = this.maxWidth; // Limita a largura máxima
+                this.estado = 'diminuindo'; // Marca que a língua está diminuindo
+            }
+            }
+            else if (dir < 0) {
+                this.width -= this.velocidade;
+                if (this.width <= -this.maxWidth) {
+                    this.width = -this.maxWidth; // Limita a largura mínima
+                    this.estado = 'diminuindo'; // Marca que a língua está diminuindo
+                }
+            }
+            
+        }
+        else if (this.estado === 'diminuindo') {
+            if (dir > 0) {
+                this.width -= this.velocidade;
+                if (this.width <= 0) {
+                this.width = 0;
+                this.estado = 'parado'; // Marca que a língua está parada
+            }
+            }
+            else if (dir < 0) {
+                this.width += this.velocidade;
+                if (this.width >= 0) {
+                    this.width = 0;
+                    this.estado = 'parado'; // Marca que a língua está parada
+                }
+            }
+            
+        }
+    }
+}
+
+
 class Mosca extends Obj {
     limit = true;
     flyHighRange = 30; // Quanto ela pode subir a partir do y inicial

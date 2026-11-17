@@ -17,7 +17,11 @@ function Draw() {
     BgGrass(110,610,7);
     mosca.desenha();
     mosca.move(3,30,1);
-    frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
+    if(!frog1.sapopula)
+    {
+        frog1.Sapinho(frog1.x, frog1.y, frog1.scale);
+    }
+    frog1.Jumpdraw(frog1.x, frog1.y, frog1.scale);
     mosca.move();
     mosca2.desenha();
     mosca2.move();

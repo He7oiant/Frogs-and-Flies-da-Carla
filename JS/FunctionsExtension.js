@@ -48,8 +48,6 @@ class Frog extends Player {
             this.x = 200;
             return;
         }
-        //this.y-=1;
-        //this.y -=this.speed-2*i;
         this.x += this.dir * this.speed;
         console.log("Funciona " + this.x);
     }

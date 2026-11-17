@@ -1,24 +1,216 @@
-html, body {
+/* CONFIGURAÇÕES GERAIS */
+
+* {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #dcebc8;
+    color: #243b22;
+}
+
+/* CABEÇALHO */
+
+header {
+    background-color: #245c35;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+    border-bottom: 8px solid #a4c639;
+}
+
+header h1 {
+    font-size: 55px;
+    letter-spacing: 5px;
+    text-shadow: 3px 3px #152e1b;
+}
+
+header p {
+    font-size: 18px;
+    margin: 10px;
+}
+
+nav {
+    margin-top: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: #a4c639;
+    color: #243b22;
+}
+
+/* CONTEÚDO PRINCIPAL */
+
+main {
+    width: 85%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.informacao {
+    background-color: #f5f8ed;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 8px solid #5b963f;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px #00000018;
+}
+
+.informacao h2,
+.jogo h2 {
+    font-size: 30px;
+    color: #34733b;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #a4c639;
+    padding-bottom: 10px;
+}
+
+.informacao p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+/* CONTROLES */
+
+.controles-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.controle {
+    background-color: #e4edda;
+    text-align: center;
+    padding: 25px;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 220px;
+}
+
+.controle h3 {
+    color: #34733b;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.controle p {
+    text-align: center;
+}
+
+.tecla {
+    background-color: #245c35;
+    color: white;
+    width: 65px;
+    height: 65px;
+    margin: 10px auto;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #098123;
+    font-size: 35px;
+    font-weight: bold;
+    box-shadow: 0 5px #163d23;
+}
+
+/* ÁREA DO JOGO */
+
+.jogo {
+    background-color: #f5f8ed;
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px #00000018;
+}
+
+.jogo p {
+    margin-bottom: 20px;
+    font-size: 17px;
 }
 
 #game {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+    overflow: auto;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-#canvas {
-    width: 1200px;
-    height: 900px;
+canvas {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+    background-color: #0bb7e2;
+    border: 4px solid #245c35;
+}
+
+.legenda {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #34733b;
+}
+
+/* RODAPÉ */
+
+footer {
+    background-color: #245c35;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    border-top: 8px solid #a4c639;
+}
+
+footer p {
+    margin: 5px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+
+    header h1 {
+        font-size: 35px;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    .informacao,
+    .jogo {
+        padding: 20px;
+    }
+
+    .controles-container {
+        flex-direction: column;
+    }
+
+    canvas {
+        width: 100%;
+        height: auto;
+    }
 }

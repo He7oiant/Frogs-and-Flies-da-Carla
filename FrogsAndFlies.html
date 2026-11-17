@@ -1,21 +1,128 @@
 <!DOCTYPE html>
-<html lang="pt" dir="ltr">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
-    <title>Sapos Obesos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frogs & Flies</title>
+
     <link rel="stylesheet" href="CSS/GameStyle.css">
 </head>
 
 <body>
 
-    <section>
-        <div id="game">
-            <canvas id="canvas" width="1200" height="900"></canvas>
-        </div>
-        <script src="JS/FunctionsExtension.js" charset="utf-8"></script>
-        <script src="JS/GameFunctions.js" charset="utf-8"></script>
-    </section>
-</body>
+    <header>
+        <h1>Frogs & Flies</h1>
+        <p>Uma disputa de saltos, línguas e moscas!</p>
 
+        <nav>
+            <a href="#historia">História</a>
+            <a href="#descricao">Sobre o jogo</a>
+            <a href="#controles">Controles</a>
+            <a href="#jogar">Jogar</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="historia" class="informacao">
+            <h2>História</h2>
+
+            <p>
+                Frogs and Flies, também conhecido como Frog Bog,
+                foi criado pela Mattel em 1982 para o console
+                Intellivision. Posteriormente, recebeu uma versão
+                para o Atari.
+            </p>
+
+            <p>
+                Inspirado nesse clássico, Sapos Obesos traz uma
+                disputa entre dois sapos que precisam capturar
+                o maior número possível de insetos.
+            </p>
+        </section>
+
+        <section id="descricao" class="informacao">
+            <h2>Descrição do jogo</h2>
+
+            <p>
+                Os sapos precisam pular para capturar os insetos
+                espalhados pela tela. Seus saltos executam um
+                movimento parabólico, sofrendo a ação da gravidade.
+            </p>
+
+            <p>
+                Antes de realizar o salto, o jogador controla
+                a direção do movimento. Durante o pulo, pode
+                utilizar a língua para capturar os insetos.
+            </p>
+
+            <p>
+                Cada jogador controla um sapo de cor diferente,
+                facilitando a identificação durante a partida.
+                Os insetos possuem cores que contrastam com o
+                cenário e apresentam movimentação em pixels.
+            </p>
+
+            <p>
+                A partida representa um único dia. Quando o
+                tempo acaba, os pontos de cada jogador são
+                comparados. O sapo que capturou mais insetos
+                vence e uma tela de encerramento é exibida.
+            </p>
+        </section>
+
+        <section id="controles" class="informacao">
+            <h2>Controles</h2>
+
+            <div class="controles-container">
+
+                <div class="controle">
+                    <h3>Jogador 1</h3>
+                    <div class="tecla">↑</div>
+                    <p>Sapo Laranja</p>
+                    <p>Utilize a seta para cima para pular.</p>
+                </div>
+
+                <div class="controle">
+                    <h3>Jogador 2</h3>
+                    <div class="tecla">W</div>
+                    <p>Sapo Cinza</p>
+                    <p>Utilize a tecla W para pular.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="jogar" class="jogo">
+            <h2>Hora de jogar!</h2>
+
+            <p>
+                Prepare-se para capturar o maior número
+                de insetos e conquistar a vitória!
+            </p>
+
+            <div id="game">
+                <canvas id="canvas" width="1200" height="900">
+                    Seu navegador não suporta Canvas.
+                </canvas>
+            </div>
+
+            <p class="legenda">
+                Sapos Obesos - Divirta-se!
+            </p>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>SAPOS OBESOS © 2026</p>
+        <p>Inspirado no clássico Frog Bog.</p>
+    </footer>
+
+    <script src="JS/FunctionsExtension.js" charset="utf-8"></script>
+    <script src="JS/GameFunctions.js" charset="utf-8"></script>
+
+</body>
 </html>
